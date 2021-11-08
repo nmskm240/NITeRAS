@@ -1,0 +1,7 @@
+@startuml AllClass
+
+class Reader 
+class Member
+class Network
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml RoomAccess
+
+title 入退出
+
+actor ユーザー as User
+participant ディスプレイ as Display
+participant 入退出ログ as Log
+
+User -> Display : 入退出選択
+ref over User, Display
+メンバー認証
+end ref
+Display --> User : 結果表示
+Display -> Log : 入退出データ送信
+Log -> Log : 書き込み
+
+@enduml

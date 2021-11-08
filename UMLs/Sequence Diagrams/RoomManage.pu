@@ -1,0 +1,23 @@
+@startuml RoomManage
+
+title 入室者管理
+
+actor ユーザー as User
+participant ディスプレイ as Display
+participant 入退出ログ as Log
+
+User -> Display : 管理者ログイン
+ref over User, Display
+メンバー認証
+end ref
+alt 教職員、幹部
+Display -> Log : 入室者一覧取得
+Log --> Display : 入室者一覧
+Display --> User : 一覧表示
+User -> Display : 一覧操作
+Display -> Log : 入室者更新
+Log -> Log : 更新
+else その他メンバー
+Display --> User : 無効ログイン
+end
+@enduml

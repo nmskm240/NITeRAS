@@ -1,0 +1,13 @@
+@startuml Auth
+
+title メンバー認証
+
+actor ユーザー as User
+participant バーコードリーダー as Reader
+participant 名簿データベース as MemberDB
+
+User -> Reader : 学生証をかざす
+Reader -> MemberDB : 在籍確認
+MemberDB --> User : 認証結果
+
+@enduml
