@@ -13,6 +13,7 @@ class SceneManager():
         if(cls.__currentScene is not None):
             cls.__stack.append(cls.__currentScene)
             cls.__currentScene.pack_forget()
+            cls.__currentScene.on_hide()
         cls.__currentScene = scene
         scene.pack()
 
@@ -25,3 +26,4 @@ class SceneManager():
         cls.__currentScene.destroy()
         cls.__currentScene = scene
         scene.pack()
+        scene.on_show()

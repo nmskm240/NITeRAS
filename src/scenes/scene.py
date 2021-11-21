@@ -9,3 +9,9 @@ class Scene(tk.Frame, metaclass=ABCMeta):
     @abstractmethod
     def on_load(self) -> None:
         pass
+
+    def on_show(self) -> None:
+        pass
+
+    def on_hide(self) -> None:
+        pass

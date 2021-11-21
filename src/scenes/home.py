@@ -1,8 +1,7 @@
 import tkinter as tk
-from scenes.barcode_read import BarcodeRead
-
 from scenes.scene import Scene
 from scenes.scene_manager import SceneManager
+from scenes.barcode_read import BarcodeRead
 
 class Home(Scene) :
     def on_load(self) -> None:
