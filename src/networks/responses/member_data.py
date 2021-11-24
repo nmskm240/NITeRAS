@@ -1,7 +1,7 @@
 from dataclasses import field
 from networks.dto_base import DTO
-from networks.responses.DiscordData import DiscordData
-from networks.responses.Game import Game
+from networks.responses.discord_data import DiscordData
+from networks.responses.game import Game
 
 class MemberData(DTO):
     id: int = -1
@@ -9,12 +9,6 @@ class MemberData(DTO):
     role: str = ""
     discord: DiscordData = None
     games: list[Game] = None
-
-    def __new__(cls, *args, **kwargs):
-        self = super().__new__(cls)
-        DiscordData.__new__(cls)
-        Game.__new__(cls)
-        return self
 
     @classmethod
     def from_json(cls, json) -> "MemberData":
