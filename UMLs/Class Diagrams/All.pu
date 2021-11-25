@@ -1,7 +1,96 @@
 @startuml AllClass
 
-class Reader 
-class Member
-class Network
+package Networks
+{
+    enum AccessPoint
+    {
+        NAME_LIST
+        ROOM_ACCESS_LOG
+    }
+
+    class AccessPointData
+    {
+        +url: str
+        +get_res_type: type
+        +post_res_type: type
+    }
+
+    abstract DTO<<dataclass, dataclass_json>>
+    {
+        +from_json(json: str): DTO
+    }
+
+    class Network
+    {
+        +{static}get(access_point: AccessPoint, req: DTO): DTO
+        +{static}post(access_point: AccessPoint, req: DTO): DTO
+    }
+
+    package Requests
+    {
+        class StudentID extends DTO
+        {
+            +id: int
+        }
+    }
+
+    package Responses
+    {
+        class DiscordData extends DTO
+        {
+            +tag: str
+            +nickname: str
+        }
+
+        class Game extends DTO
+        {
+            +name: str
+            +id: str
+        }
+
+        class MemberData extends DTO
+        {
+            +id: int
+            +name: str
+            +discord: DiscordData
+            +games: List[Game]
+        }
+    }
+}
+
+package SceneManagement
+{
+    class SceneManager
+    {
+        -__stack: list[Scene]
+        -__currentScene: Scene
+        +load(scene: Scene): None
+        +back(): None
+    }
+
+    abstract Scene extends tkinter.Frame
+    {
+        +{abstract}on_load(): None
+        +on_show(): None
+        +on_hide(): None
+    }
+
+    package Scenes
+    {
+        class Home extends Scene
+        class Login extends Scene
+    }
+}
+
+Network .left.> DTO
+Network .up.> AccessPointData
+AccessPoint .left.> AccessPointData
+
+SceneManager "1" *.left.> "*" Scene
+
+Game "*" --* "1" MemberData
+DiscordData "1" --* "1" MemberData
+
+Login --> Network : use
 
 @enduml

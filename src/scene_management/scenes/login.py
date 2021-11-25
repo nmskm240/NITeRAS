@@ -2,8 +2,8 @@ import tkinter as tk
 from networks.access_point import AccessPoint
 from networks.network import Network
 from networks.requests.student_id import StudentID
-from scenes.scene import Scene
-from scenes.scene_manager import SceneManager
+from scene_management.scene import Scene
+from scene_management.scene_manager import SceneManager
 
 class Login(Scene): 
     def enrollment_check(self) -> None:

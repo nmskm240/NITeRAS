@@ -1,5 +1,5 @@
 import warnings
-from scenes.scene import Scene
+from scene_management.scene import Scene
 
 class SceneManager():
     __stack: list[Scene] = list()

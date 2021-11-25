@@ -2,8 +2,8 @@ import tkinter as tk
 
 from dotenv import load_dotenv
 
-from scenes.home import Home
-from scenes.scene_manager import SceneManager
+from scene_management.scenes.home import Home
+from scene_management.scene_manager import SceneManager
 
 load_dotenv()
 

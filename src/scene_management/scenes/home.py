@@ -1,7 +1,7 @@
 import tkinter as tk
-from scenes.scene import Scene
-from scenes.scene_manager import SceneManager
-from scenes.login import Login
+from scene_management.scene import Scene
+from scene_management.scene_manager import SceneManager
+from scene_management.scenes.login import Login
 
 class Home(Scene) :
     def on_load(self) -> None:
