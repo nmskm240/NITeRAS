@@ -1,7 +1,6 @@
-from dataclasses import field
 from networks.dto_base import DTO
 from networks.responses.discord_data import DiscordData
-from networks.responses.game import Game
+from networks.responses.game_data import Game
 
 class MemberData(DTO):
     id: int = -1
