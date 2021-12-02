@@ -16,6 +16,8 @@ class SceneManager():
             cls.__currentScene.on_hide()
         cls.__currentScene = scene
         scene.pack()
+        scene.on_load()
+        scene.on_show()
 
     @classmethod
     def back(cls) -> None:
@@ -23,6 +25,8 @@ class SceneManager():
             warnings.warn("can't go back any further.")
             return
         scene = cls.__stack.pop()
+        cls.__currentScene.on_hide()
+        cls.__currentScene.on_destroy()
         cls.__currentScene.destroy()
         cls.__currentScene = scene
         scene.pack()
