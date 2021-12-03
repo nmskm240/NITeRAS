@@ -1,22 +1,16 @@
 import tkinter as tk
-from networks.access_point import AccessPoint
-from networks.network import Network
-from networks.requests.student_id import StudentID
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
+from systems.room_access_manager import RoomAccessManager
 
 class Login(Scene): 
-    def enrollment_check(self) -> None:
-        dto = StudentID(int(self.entry.get()))
-        member = Network.get(AccessPoint.NAME_LIST, dto)
-        print(member)
-
     def on_load(self) -> None:
-        self.entry = tk.Entry(self)
-        self.result = tk.Label(self)
-        self.submit = tk.Button(self, text="送信", command=lambda: self.enrollment_check())
+        self.sv = tk.StringVar();
+        self.announce = tk.Label(self, text="学生証をかざしてください")
+        self.entry = tk.Entry(self, textvariable=self.sv)
+        self.entry.focus_set()
+        self.entry.bind("<Return>", func=lambda event: RoomAccessManager.access(self.sv.get()))
         self.back = tk.Button(self, text="戻る", command=lambda: SceneManager.back())
-        self.result.pack()
+        self.announce.pack()
         self.entry.pack()
-        self.submit.pack()
         self.back.pack()

@@ -16,4 +16,3 @@ class Network():
         if(res.status_code != 200 or res.text == "null" or access_point._value_.post_res_type is None):
             return None
         return access_point._value_.post_res_type.from_json(res.text)
-
