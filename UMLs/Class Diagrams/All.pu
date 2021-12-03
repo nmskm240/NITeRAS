@@ -38,13 +38,14 @@ package Networks
     {
         class DiscordData extends DTO
         {
+            +id: str
             +tag: str
             +nickname: str
         }
 
         class Game extends DTO
         {
-            +name: str
+            +title: str
             +id: str
         }
 
@@ -64,8 +65,8 @@ package SceneManagement
     {
         -__stack: list[Scene]
         -__currentScene: Scene
-        +load(scene: Scene): None
-        +back(): None
+        +{static}load(scene: Scene): None
+        +{static}back(): None
     }
 
     abstract Scene extends tkinter.Frame
@@ -73,12 +74,20 @@ package SceneManagement
         +{abstract}on_load(): None
         +on_show(): None
         +on_hide(): None
+        +on_destory(): None
     }
 
     package Scenes
     {
         class Home extends Scene
         class Login extends Scene
+    }
+}
+package Systems
+{
+    class RoomAccessManager
+    {
+        +{static}access(id: str): 
     }
 }
 
@@ -91,6 +100,7 @@ SceneManager "1" *.left.> "*" Scene
 Game "*" --* "1" MemberData
 DiscordData "1" --* "1" MemberData
 
-Login --> Network : use
+Login --> RoomAccessManager : use
+RoomAccessManager --> Network : use
 
 @enduml
