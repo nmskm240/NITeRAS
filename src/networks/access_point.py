@@ -12,3 +12,4 @@ class AccessPointData():
 
 class AccessPoint(Enum):
     NAME_LIST = AccessPointData(os.environ["NAME_LIST_API_URL"], MemberData, None)
+    ROOM_ACCESS_LOG = AccessPointData(os.environ["ROOM_ACCESS_API_URL"], None, None)
