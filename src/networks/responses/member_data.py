@@ -1,8 +1,17 @@
+from dataclasses import dataclass, field
 from networks.dto_base import DTO
-from networks.responses.discord_data import DiscordData
-from networks.responses.game_data import Game
 
 class MemberData(DTO):
+    class DiscordData(DTO):
+        id: str = ""
+        nickname: str = ""
+        tag: str = ""
+
+    class Game(DTO):
+        title: str = ""
+        id: str = ""
+
+
     id: int = -1
     name: str = ""
     role: str = ""
@@ -14,7 +23,7 @@ class MemberData(DTO):
         #事前に必要なインスタンスを作成しないとparseできなかったので記入
         #---------------
         MemberData()
-        DiscordData()
-        Game()
+        cls.DiscordData()
+        cls.Game()
         #---------------
         return super().from_json(json)

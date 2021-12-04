@@ -6,6 +6,7 @@ class Network():
     @staticmethod
     def get(access_point: AccessPoint, req: DTO) -> DTO:
         res = requests.get(access_point._value_.url, req.to_dict())
+        print(res.text)
         if(res.status_code != 200 or res.text == "null" or access_point._value_.get_res_type is None):
             return None
         return access_point._value_.get_res_type.from_json(res.text)

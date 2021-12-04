@@ -97,8 +97,8 @@ AccessPoint .left.> AccessPointData
 
 SceneManager "1" *.left.> "*" Scene
 
-Game "*" --* "1" MemberData
-DiscordData "1" --* "1" MemberData
+Game --+ MemberData
+DiscordData --+ MemberData
 
 Login --> RoomAccessManager : use
 RoomAccessManager --> Network : use
