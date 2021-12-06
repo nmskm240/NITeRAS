@@ -1,5 +1,14 @@
+from enum import Enum
 from networks.dto_base import DTO
 from networks.responses.member_data import MemberData
+
+class Campus(str, Enum):
+    OBASE = "小波瀬"
+    KOKURA = "小倉"
+
+class RoomAccessType(str, Enum):
+    IN = "入室"
+    OUT = "退室"
 
 class RoomAccessData(DTO):
     class Member(DTO):
@@ -11,11 +20,12 @@ class RoomAccessData(DTO):
         discord: Discord = None
 
     member: Member = None
-    campus: str = ""
-    type: str = ""
+    campus: Campus = Campus.OBASE
+    type: RoomAccessType = RoomAccessType.IN
 
-    @classmethod
-    def parse(cls, memberData: MemberData):
-        discord = cls.Member.Discord(memberData.discord.id)
-        member = cls.Member(memberData.id, memberData.name, discord)
-        return RoomAccessData(member, "小波瀬", "入室")
+    def __init__(self, memberData: MemberData, campus: Campus, accessType: RoomAccessType):
+        discord = self.Member.Discord(memberData.discord.id)
+        member = self.Member(memberData.id, memberData.name, discord)
+        self.member = member
+        self.campus = campus
+        self.type = accessType

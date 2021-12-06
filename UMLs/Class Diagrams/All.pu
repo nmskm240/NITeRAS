@@ -28,6 +28,37 @@ package Networks
 
     package Requests
     {
+        enum Campus
+        {
+            OBASE,
+            KOKURA
+        }
+
+        enum RoomAccessType
+        {
+            IN,
+            OUT
+        }
+
+        class Discord extends DTO
+        {
+            +id: str
+        }
+
+        class Member extends DTO
+        {
+            +id: int
+            +name: str
+            +discord: Discord
+        }
+
+        class RoomAccessData extends DTO
+        {
+            member: Member
+            campus: Campus
+            type: RoomAccessType
+        }
+
         class StudentID extends DTO
         {
             +id: int
@@ -55,6 +86,12 @@ package Networks
             +name: str
             +discord: DiscordData
             +games: List[Game]
+        }
+
+        class RoomAccessResult extends DTO
+        {
+            state: str
+            message: str
         }
     }
 }
@@ -94,11 +131,15 @@ package Systems
 Network .left.> DTO
 Network .up.> AccessPointData
 AccessPoint .left.> AccessPointData
+RoomAccessType .up.> RoomAccessData
+Campus .up.> RoomAccessData
 
 SceneManager "1" *.left.> "*" Scene
 
-Game --+ MemberData
-DiscordData --+ MemberData
+Game -up-+ MemberData
+DiscordData -up-+ MemberData
+Member -up-+ RoomAccessData
+Discord -up-+ Member
 
 Login --> RoomAccessManager : use
 RoomAccessManager --> Network : use
