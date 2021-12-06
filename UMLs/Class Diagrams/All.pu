@@ -118,13 +118,16 @@ package SceneManagement
     {
         class Home extends Scene
         class Login extends Scene
+        {
+            +do_login: Function
+        }
     }
 }
 package Systems
 {
     class RoomAccessManager
     {
-        +{static}access(id: str): 
+        +{static}access(id: str, access_type: RoomAccessType): 
     }
 }
 

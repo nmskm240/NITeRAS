@@ -2,7 +2,7 @@ import tkinter as tk
 from abc import ABCMeta, abstractmethod
 
 class Scene(tk.Frame, metaclass=ABCMeta):
-    def __init__(self, master= None):
+    def __init__(self, master):
         tk.Frame.__init__(self, master)
 
     @abstractmethod
