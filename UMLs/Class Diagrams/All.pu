@@ -1,7 +1,150 @@
 @startuml AllClass
 
-class Reader 
-class Member
-class Network
+package Networks
+{
+    enum AccessPoint
+    {
+        NAME_LIST
+        ROOM_ACCESS_LOG
+    }
+
+    class AccessPointData
+    {
+        +url: str
+        +get_res_type: type
+        +post_res_type: type
+    }
+
+    abstract DTO<<dataclass, dataclass_json>>
+    {
+        +from_json(json: str): DTO
+    }
+
+    class Network
+    {
+        +{static}get(access_point: AccessPoint, req: DTO): DTO
+        +{static}post(access_point: AccessPoint, req: DTO): DTO
+    }
+
+    package Requests
+    {
+        enum Campus
+        {
+            OBASE,
+            KOKURA
+        }
+
+        enum RoomAccessType
+        {
+            IN,
+            OUT
+        }
+
+        class Discord extends DTO
+        {
+            +id: str
+        }
+
+        class Member extends DTO
+        {
+            +id: int
+            +name: str
+            +discord: Discord
+        }
+
+        class RoomAccessData extends DTO
+        {
+            member: Member
+            campus: Campus
+            type: RoomAccessType
+        }
+
+        class StudentID extends DTO
+        {
+            +id: int
+        }
+    }
+
+    package Responses
+    {
+        class DiscordData extends DTO
+        {
+            +id: str
+            +tag: str
+            +nickname: str
+        }
+
+        class Game extends DTO
+        {
+            +title: str
+            +id: str
+        }
+
+        class MemberData extends DTO
+        {
+            +id: int
+            +name: str
+            +discord: DiscordData
+            +games: List[Game]
+        }
+
+        class RoomAccessResult extends DTO
+        {
+            state: str
+            message: str
+        }
+    }
+}
+
+package SceneManagement
+{
+    class SceneManager
+    {
+        -__stack: list[Scene]
+        -__currentScene: Scene
+        +{static}load(scene: Scene): None
+        +{static}back(): None
+    }
+
+    abstract Scene extends tkinter.Frame
+    {
+        +{abstract}on_load(): None
+        +on_show(): None
+        +on_hide(): None
+        +on_destory(): None
+    }
+
+    package Scenes
+    {
+        class Home extends Scene
+        class Login extends Scene
+        {
+            +do_login: Function
+        }
+    }
+}
+package Systems
+{
+    class RoomAccessManager
+    {
+        +{static}access(id: str, access_type: RoomAccessType): 
+    }
+}
+
+Network .left.> DTO
+Network .up.> AccessPointData
+AccessPoint .left.> AccessPointData
+RoomAccessType .up.> RoomAccessData
+Campus .up.> RoomAccessData
+
+SceneManager "1" *.left.> "*" Scene
+
+Game -up-+ MemberData
+DiscordData -up-+ MemberData
+Member -up-+ RoomAccessData
+Discord -up-+ Member
+
+Login --> RoomAccessManager : use
+RoomAccessManager --> Network : use
 
 @enduml
