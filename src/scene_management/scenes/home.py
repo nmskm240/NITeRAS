@@ -1,4 +1,5 @@
 import tkinter as tk
+
 from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
@@ -7,9 +8,14 @@ from systems.room_access_manager import RoomAccessManager
 
 class Home(Scene) :
     def on_load(self) -> None:
-        self.room_in = tk.Button(
-            self, 
+        buttons = tk.Label(self)
+        room_in = tk.Button(
+            buttons, 
             text="入室", 
+            font=("", 80),
+            height=5,
+            width=10,
+            fg="green",
             command= lambda: SceneManager.load(
                 Login(
                     self.master, 
@@ -17,9 +23,13 @@ class Home(Scene) :
                 )
             )
         )
-        self.room_out = tk.Button(
-            self, 
+        room_out = tk.Button(
+            buttons, 
             text="退室",
+            font=("", 80),
+            height=5,
+            width=10,
+            fg="red",
             command= lambda: SceneManager.load(
                 Login(
                     self.master, 
@@ -27,5 +37,6 @@ class Home(Scene) :
                 )
             )
         )
-        self.room_in.pack()
-        self.room_out.pack()
+        room_in.pack(padx=20, side=tk.LEFT)
+        room_out.pack(padx=20, side=tk.LEFT)
+        buttons.pack(pady=50, expand=True)
