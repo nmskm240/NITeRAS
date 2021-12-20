@@ -1,28 +1,39 @@
 import tkinter as tk
 
-from marshmallow.fields import Function
+from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
-from scene_management.scenes.result import Result
+from scene_management.scenes.error import Error
+from scene_management.scenes.processing import Processing
+from scene_management.scenes.success import Success
+from systems.room_access_manager import RoomAccessManager
 
 class Login(Scene): 
-    do_login: Function(str)
-
-    def __init__(self, master, do_login: Function(str) = None):
+    def __init__(self, master, access_type: RoomAccessType):
         super().__init__(master)
-        self.do_login = do_login
-
-    def on_load(self) -> None:
+        self.__access_type = access_type
         sv = tk.StringVar()
         announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
         entry.focus_set()
-        entry.bind("<Return>", func=lambda event: self.login_process(sv.get()))
+        entry.bind("<Return>", func=lambda event: SceneManager.load(
+            Processing(self.master, lambda: self.__login_process(sv.get()))
+        ))
         back = tk.Button(self, text="戻る", command=lambda: SceneManager.back())
         announce.pack()
         entry.pack()
         back.pack()
 
-    def login_process(self, id: str) -> None:
-        result = self.do_login(id)
-        SceneManager.load(Result(self.master, result))
+    def __login_process(self, id: str) -> None:
+        id = id.replace("A", "")
+        if(id.isdigit()):
+            try:
+                result = RoomAccessManager.access(int(id), self.__access_type)
+                if(result.state == "SUCCESS"):
+                    SceneManager.load(Success(self.master, result.message))
+                else:
+                    SceneManager.load(Error(self.master, result.message))
+            except Exception as e:
+                SceneManager.load(Error(self.master, e))
+        else:
+            SceneManager.load(Error(self.master, "このバーコードは使用できません"))

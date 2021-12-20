@@ -22,6 +22,7 @@ package Networks
 
     class Network
     {
+        +{static}is_connection(): bool
         +{static}get(access_point: AccessPoint, req: DTO): DTO
         +{static}post(access_point: AccessPoint, req: DTO): DTO
     }
@@ -40,26 +41,26 @@ package Networks
             OUT
         }
 
-        class Discord extends DTO
+        class Discord 
         {
             +id: str
         }
 
-        class Member extends DTO
+        class Member 
         {
             +id: int
             +name: str
             +discord: Discord
         }
 
-        class RoomAccessData extends DTO
+        class RoomAccessData 
         {
             member: Member
             campus: Campus
             type: RoomAccessType
         }
 
-        class StudentID extends DTO
+        class StudentID 
         {
             +id: int
         }
@@ -67,20 +68,20 @@ package Networks
 
     package Responses
     {
-        class DiscordData extends DTO
+        class DiscordData 
         {
             +id: str
             +tag: str
             +nickname: str
         }
 
-        class Game extends DTO
+        class Game 
         {
             +title: str
             +id: str
         }
 
-        class MemberData extends DTO
+        class MemberData
         {
             +id: int
             +name: str
@@ -88,7 +89,7 @@ package Networks
             +games: List[Game]
         }
 
-        class RoomAccessResult extends DTO
+        class RoomAccessResult
         {
             state: str
             message: str
@@ -102,11 +103,12 @@ package SceneManagement
     {
         -__stack: list[Scene]
         -__currentScene: Scene
-        +{static}load(scene: Scene): None
-        +{static}back(): None
+        +{class}load(scene: Scene): None
+        +{class}back(): None
+        +{class}back_root(): None
     }
 
-    abstract Scene extends tkinter.Frame
+    abstract Scene
     {
         +{abstract}on_load(): None
         +on_show(): None
@@ -116,11 +118,22 @@ package SceneManagement
 
     package Scenes
     {
-        class Home extends Scene
-        class Login extends Scene
+        class Announce
         {
-            +do_login: Function
+            #_title: tk.Label
+            #_body: tk.Label
         }
+        class Error
+        class Home
+        class Login
+        {
+            -__login_process(id: str): None
+        }
+        class Processing
+        {
+            -__task: Thread
+        }
+        class Success
     }
 }
 package Systems
@@ -131,6 +144,25 @@ package Systems
     }
 }
 
+Scene --|> tk.Frame
+Announce --|> Scene
+Error --|> Scene
+Home --|> Scene
+Login --|> Scene
+Processing --|> Scene
+Success --|> Scene
+Error --|> Announce
+Success --|> Announce
+
+RoomAccessData --|> DTO
+StudentID --|> DTO
+MemberData --|> DTO
+DiscordData --|> DTO
+Game --|> DTO
+RoomAccessResult --|> DTO
+Member --|> DTO
+Discord --|> DTO
+
 Network .left.> DTO
 Network .up.> AccessPointData
 AccessPoint .left.> AccessPointData
@@ -139,10 +171,10 @@ Campus .up.> RoomAccessData
 
 SceneManager "1" *.left.> "*" Scene
 
-Game -up-+ MemberData
-DiscordData -up-+ MemberData
-Member -up-+ RoomAccessData
-Discord -up-+ Member
+Game --+ MemberData
+DiscordData --+ MemberData
+Member --+ RoomAccessData
+Discord --+ Member
 
 Login --> RoomAccessManager : use
 RoomAccessManager --> Network : use

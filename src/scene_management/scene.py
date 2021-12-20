@@ -1,11 +1,10 @@
 import tkinter as tk
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 
 class Scene(tk.Frame, metaclass=ABCMeta):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
 
-    @abstractmethod
     def on_load(self) -> None:
         pass
 

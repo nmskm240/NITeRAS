@@ -1,12 +1,8 @@
-import warnings
 from scene_management.scene import Scene
 
 class SceneManager():
     __stack: list[Scene] = list()
     __currentScene: Scene = None
-
-    def __init__(self) -> None:
-        pass
 
     @classmethod
     def load(cls, scene: Scene) -> None:
@@ -21,13 +17,24 @@ class SceneManager():
 
     @classmethod
     def back(cls) -> None:
-        if(cls.__stack.count == 0):
-            warnings.warn("can't go back any further.")
-            return
+        if(len(cls.__stack) == 0):
+            raise "can't go back any further."
         scene = cls.__stack.pop()
         cls.__currentScene.on_hide()
         cls.__currentScene.on_destroy()
         cls.__currentScene.destroy()
+        cls.__currentScene = scene
+        scene.pack()
+        scene.on_show()
+    
+    @classmethod
+    def back_root(cls) -> None:
+        scene = cls.__currentScene
+        scene.on_hide()
+        while 0 < len(cls.__stack):
+            scene.on_destroy()
+            scene.destroy()
+            scene = cls.__stack.pop()
         cls.__currentScene = scene
         scene.pack()
         scene.on_show()
