@@ -14,8 +14,6 @@ class Home(Scene) :
             buttons, 
             text="入室", 
             font=("", 80),
-            height=5,
-            width=10,
             fg="green",
             command= lambda: SceneManager.load(
                 Login(self.master, RoomAccessType.IN)
@@ -25,8 +23,6 @@ class Home(Scene) :
             buttons, 
             text="退室",
             font=("", 80),
-            height=5,
-            width=10,
             fg="red",
             command= lambda: SceneManager.load(
                 Login(self.master, RoomAccessType.OUT)
