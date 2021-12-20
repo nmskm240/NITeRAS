@@ -4,6 +4,7 @@ from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
 from scene_management.scenes.error import Error
+from scene_management.scenes.processing import Processing
 from scene_management.scenes.success import Success
 from systems.room_access_manager import RoomAccessManager
 
@@ -17,7 +18,7 @@ class Login(Scene):
         announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
         entry.focus_set()
-        entry.bind("<Return>", func=lambda event: self.login_process(sv.get()))
+        entry.bind("<Return>", func=lambda event: SceneManager.load(Processing(self.master, lambda: self.login_process(sv.get()))))
         back = tk.Button(self, text="戻る", command=lambda: SceneManager.back())
         announce.pack()
         entry.pack()
