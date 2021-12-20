@@ -9,8 +9,6 @@ from scene_management.scenes.success import Success
 from systems.room_access_manager import RoomAccessManager
 
 class Login(Scene): 
-    __access_type: RoomAccessType
-
     def __init__(self, master, access_type: RoomAccessType):
         super().__init__(master)
         self.__access_type = access_type
@@ -18,18 +16,20 @@ class Login(Scene):
         announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
         entry.focus_set()
-        entry.bind("<Return>", func=lambda event: SceneManager.load(Processing(self.master, lambda: self.login_process(sv.get()))))
+        entry.bind("<Return>", func=lambda event: SceneManager.load(
+            Processing(self.master, lambda: self.__login_process(sv.get()))
+        ))
         back = tk.Button(self, text="戻る", command=lambda: SceneManager.back())
         announce.pack()
         entry.pack()
         back.pack()
 
-    def login_process(self, id: str) -> None:
+    def __login_process(self, id: str) -> None:
         id = id.replace("A", "")
         if(id.isdigit()):
             try:
                 result = RoomAccessManager.access(int(id), self.__access_type)
-                if(result.state is "SUCCESS"):
+                if(result.state == "SUCCESS"):
                     SceneManager.load(Success(self.master, result.message))
                 else:
                     SceneManager.load(Error(self.master, result.message))
