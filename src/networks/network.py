@@ -1,4 +1,4 @@
-import warnings
+import platform
 import requests
 import subprocess
 from networks.access_point import AccessPoint
@@ -7,7 +7,11 @@ from networks.dto_base import DTO
 class Network():
     @staticmethod
     def is_connection() -> bool:
-        res = subprocess.run(["ping","8.8.8.8","-n","2"], stdout=subprocess.PIPE)    
+        shell_command = ["ping", "8.8.8.8"]
+        if platform.system() == "Windows":
+            res = subprocess.run(shell_command, stdout=subprocess.PIPE) 
+        else:
+            res = subprocess.run(shell_command)   
         return res.returncode == 0
 
     @staticmethod
