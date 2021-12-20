@@ -3,16 +3,15 @@ import tkinter as tk
 from marshmallow.fields import Function
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
-from scene_management.scenes.result import Result
+from scene_management.scenes.error import Error
+from scene_management.scenes.success import Success
 
 class Login(Scene): 
-    do_login: Function(str)
+    do_login: Function(int)
 
-    def __init__(self, master, do_login: Function(str) = None):
+    def __init__(self, master, do_login: Function(int) = None):
         super().__init__(master)
         self.do_login = do_login
-
-    def on_load(self) -> None:
         sv = tk.StringVar()
         announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
@@ -24,5 +23,15 @@ class Login(Scene):
         back.pack()
 
     def login_process(self, id: str) -> None:
-        result = self.do_login(id)
-        SceneManager.load(Result(self.master, result))
+        id = id.replace("A", "")
+        if(id.isdigit()):
+            try:
+                result = self.do_login(int(id))
+                if(result.state is "SUCCESS"):
+                    SceneManager.load(Success(self.master, result.message))
+                else:
+                    SceneManager.load(Error(self.master, result.message))
+            except Exception as e:
+                SceneManager.load(Error(self.master, e))
+        else:
+            SceneManager.load(Error(self.master, "このバーコードは使用できません"))

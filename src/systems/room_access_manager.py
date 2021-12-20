@@ -7,11 +7,9 @@ from networks.responses.room_access_result import RoomAccessResult
 
 class RoomAccessManager():
     @staticmethod
-    def access(id: str, access_type: RoomAccessType) -> RoomAccessResult:
-        id = id.replace("A", "")
-        if(id.isdigit()):
-            dto = StudentID(int(id))
-            member = Network.get(AccessPoint.NAME_LIST, dto)
-            access_data = RoomAccessData(member, os.environ["CAMPUS_NAME"], access_type)
-            access_result = Network.post(AccessPoint.ROOM_ACCESS_LOG, access_data)
-            return access_result
+    def access(id: int, access_type: RoomAccessType) -> RoomAccessResult:
+        dto = StudentID(id)
+        member = Network.get(AccessPoint.NAME_LIST, dto)
+        access_data = RoomAccessData(member, os.environ["CAMPUS_NAME"], access_type)
+        access_result = Network.post(AccessPoint.ROOM_ACCESS_LOG, access_data)
+        return access_result

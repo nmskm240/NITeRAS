@@ -7,7 +7,8 @@ from scene_management.scenes.login import Login
 from systems.room_access_manager import RoomAccessManager
 
 class Home(Scene) :
-    def on_load(self) -> None:
+    def __init__(self, master):
+        super().__init__(master)
         buttons = tk.Label(self)
         room_in = tk.Button(
             buttons, 
