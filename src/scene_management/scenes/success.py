@@ -7,5 +7,5 @@ class Success(Announce):
         self.title.config(fg="green")
 
     def on_load(self) -> None:
-        playsound("sounds/success.mp3")
+        playsound("sounds\success.mp3")
         return super().on_load()

@@ -7,5 +7,5 @@ class Error(Announce):
         self.title.config(fg="red")
 
     def on_load(self) -> None:
-        playsound("sounds/error.mp3")
+        playsound("sounds\error.mp3")
         return super().on_load()
