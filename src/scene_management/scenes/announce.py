@@ -13,4 +13,4 @@ class Announce(Scene, metaclass=ABCMeta):
         self.body.pack()
 
     def on_load(self) -> None:
-        self.after(1000, func=lambda: [SceneManager.back(), SceneManager.back()])
+        self.after(1000, func=lambda: SceneManager.back_root())
