@@ -1,17 +1,18 @@
 import tkinter as tk
 
-from marshmallow.fields import Function
+from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
 from scene_management.scenes.error import Error
 from scene_management.scenes.success import Success
+from systems.room_access_manager import RoomAccessManager
 
 class Login(Scene): 
-    do_login: Function(int)
+    __access_type: RoomAccessType
 
-    def __init__(self, master, do_login: Function(int) = None):
+    def __init__(self, master, access_type: RoomAccessType):
         super().__init__(master)
-        self.do_login = do_login
+        self.__access_type = access_type
         sv = tk.StringVar()
         announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
@@ -26,7 +27,7 @@ class Login(Scene):
         id = id.replace("A", "")
         if(id.isdigit()):
             try:
-                result = self.do_login(int(id))
+                result = RoomAccessManager.access(int(id), self.__access_type)
                 if(result.state is "SUCCESS"):
                     SceneManager.load(Success(self.master, result.message))
                 else:

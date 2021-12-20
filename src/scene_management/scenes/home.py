@@ -18,10 +18,7 @@ class Home(Scene) :
             width=10,
             fg="green",
             command= lambda: SceneManager.load(
-                Login(
-                    self.master, 
-                    do_login= lambda id: RoomAccessManager.access(id, RoomAccessType.IN)
-                )
+                Login(self.master, RoomAccessType.IN)
             )
         )
         room_out = tk.Button(
@@ -32,10 +29,7 @@ class Home(Scene) :
             width=10,
             fg="red",
             command= lambda: SceneManager.load(
-                Login(
-                    self.master, 
-                    do_login= lambda id: RoomAccessManager.access(id, RoomAccessType.OUT)
-                )
+                Login(self.master, RoomAccessType.OUT)
             )
         )
         room_in.pack(padx=20, side=tk.LEFT)
