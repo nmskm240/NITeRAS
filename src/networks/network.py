@@ -9,7 +9,7 @@ class Network():
     def is_connection() -> bool:
         shell_command = ["ping", "8.8.8.8"]
         if platform.system() == "Windows":
-            res = subprocess.run(shell_command + ["-c", "2"], stdout=subprocess.PIPE) 
+            res = subprocess.run(shell_command, stdout=subprocess.PIPE) 
         else:
             res = subprocess.run(shell_command + ["-n", "2"])   
         return res.returncode == 0
