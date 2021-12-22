@@ -29,4 +29,4 @@ class Home(Scene) :
         )
         room_in.pack(padx=20, side=tk.LEFT)
         room_out.pack(padx=20, side=tk.LEFT)
-        buttons.pack(pady=50, expand=True)
+        buttons.place(x=0, y=0)

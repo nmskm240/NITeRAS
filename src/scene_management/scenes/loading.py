@@ -5,7 +5,7 @@ from tkinter import ttk
 from threading import Thread
 from scene_management.scene import Scene
 
-class Processing(Scene):
+class Loading(Scene):
     __task: Thread
 
     def __init__(self, master, task: Function):
