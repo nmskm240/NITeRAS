@@ -13,16 +13,27 @@ class Login(Scene):
         super().__init__(master)
         self.__access_type = access_type
         sv = tk.StringVar()
-        announce = tk.Label(self, text="学生証をかざしてください", font=("", 20))
         entry = tk.Entry(self, textvariable=sv)
         entry.focus_set()
         entry.bind("<Return>", func=lambda event: SceneManager.load(
             Processing(self.master, lambda: self.__login_process(sv.get()))
         ))
-        back = tk.Button(self, text="戻る", command=lambda: SceneManager.back())
-        announce.pack()
+        self._background = tk.PhotoImage(file="images\\backgrounds\\login.png")
+        photo_label = tk.Label(self, image=self._background)
+        self.__back_button_photo = tk.PhotoImage(file="images\widgets\\back_button.png")
+        back = tk.Button(
+            self, 
+            image=self.__back_button_photo, 
+            background="#4CAFE5",
+            command=lambda: SceneManager.back(), compound=tk.CENTER
+        )
+        photo_label.pack()
         entry.pack()
-        back.pack()
+        back.place(
+            anchor=tk.SW, 
+            x=0, 
+            y=self.master.winfo_height()
+        )
 
     def __login_process(self, id: str) -> None:
         id = id.replace("A", "")

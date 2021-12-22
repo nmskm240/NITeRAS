@@ -4,7 +4,6 @@ from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from scene_management.scene_manager import SceneManager
 from scene_management.scenes.login import Login
-from systems.room_access_manager import RoomAccessManager
 
 class Home(Scene) :
     def __init__(self, master):
