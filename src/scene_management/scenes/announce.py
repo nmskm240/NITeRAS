@@ -1,4 +1,3 @@
-import tkinter as tk
 from abc import ABCMeta
 
 from scene_management.scene import Scene

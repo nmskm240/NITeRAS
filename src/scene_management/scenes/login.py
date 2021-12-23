@@ -7,6 +7,7 @@ from scene_management.scenes.complete import Complete
 from scene_management.scenes.error import Error
 from scene_management.scenes.loading import Loading
 from systems.room_access_manager import RoomAccessManager
+from widgets.back_button import BackButton
 
 class Login(Scene): 
     def __init__(self, master, access_type: RoomAccessType):
@@ -18,14 +19,8 @@ class Login(Scene):
         entry.bind("<Return>", func=lambda event: SceneManager.load(
             Loading(self.master, lambda: self.__login_process(sv.get()))
         ))
-        self.__back_button_photo = tk.PhotoImage(file="images\widgets\\back_button.png")
-        back = tk.Button(
-            self, 
-            image=self.__back_button_photo, 
-            background="#4CAFE5",
-            command=lambda: SceneManager.back(), compound=tk.CENTER
-        )
         entry.place(x=0, y=0, height=1)
+        back = BackButton(self)
         back.place(
             anchor=tk.SW, 
             x=0, 

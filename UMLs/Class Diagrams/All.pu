@@ -110,6 +110,7 @@ package SceneManagement
 
     abstract Scene
     {
+        -__backgound: PhotoImage
         +{abstract}on_load(): None
         +on_show(): None
         +on_hide(): None
@@ -118,11 +119,11 @@ package SceneManagement
 
     package Scenes
     {
-        class Announce
+        abstract Announce
         {
-            #_title: tk.Label
-            #_body: tk.Label
+            #_message: str
         }
+        class Complete
         class Error
         class Home
         class Login
@@ -133,7 +134,6 @@ package SceneManagement
         {
             -__task: Thread
         }
-        class Success
     }
 }
 package Systems
@@ -143,6 +143,29 @@ package Systems
         +{static}access(id: str, access_type: RoomAccessType): 
     }
 }
+package Utils
+{
+    class ExtentionFunction
+    {
+        +{class}init(): None
+        -__get_root_widget(): Misc
+    }
+}
+package Widgets
+{
+    class BackButton
+    abstract ImageButton
+    {
+        #{abstract}_on_click(): None
+    }
+    class RoomAccessButton
+    {
+        -__access_type: RoomAccessType
+    }
+}
+
+tk.Frame --|> tk.Misc
+tk.Button --|> tk.Misc
 
 Scene --|> tk.Frame
 Announce --|> Scene
@@ -150,9 +173,9 @@ Error --|> Scene
 Home --|> Scene
 Login --|> Scene
 Processing --|> Scene
-Success --|> Scene
+Complete --|> Scene
 Error --|> Announce
-Success --|> Announce
+Complete --|> Announce
 
 RoomAccessData --|> DTO
 StudentID --|> DTO
@@ -162,6 +185,10 @@ Game --|> DTO
 RoomAccessResult --|> DTO
 Member --|> DTO
 Discord --|> DTO
+
+ImageButton --|> tk.Button
+BackButton --|> ImageButton
+RoomAccessButton --|> ImageButton
 
 Network .left.> DTO
 Network .up.> AccessPointData
@@ -178,5 +205,6 @@ Discord --+ Member
 
 Login --> RoomAccessManager : use
 RoomAccessManager --> Network : use
+ExtentionFunction --> tk.Misc : extention
 
 @enduml
