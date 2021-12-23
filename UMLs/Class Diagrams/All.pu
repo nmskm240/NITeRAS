@@ -130,7 +130,7 @@ package SceneManagement
         {
             -__login_process(id: str): None
         }
-        class Processing
+        class Loading
         {
             -__task: Thread
         }
@@ -153,6 +153,7 @@ package Utils
 package Widgets
 {
     class BackButton
+    class CloseButton
     abstract ImageButton
     {
         #{abstract}_on_click(): None
@@ -168,7 +169,7 @@ Announce --|> Scene
 Error --|> Scene
 Home --|> Scene
 Login --|> Scene
-Processing --|> Scene
+Loading --|> Scene
 Complete --|> Scene
 Error --|> Announce
 Complete --|> Announce
@@ -184,6 +185,7 @@ Discord --|> DTO
 
 ImageButton --|> tk.Button
 BackButton --|> ImageButton
+CloseButton --|> ImageButton
 RoomAccessButton --|> ImageButton
 
 Network .left.> DTO
