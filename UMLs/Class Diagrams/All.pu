@@ -145,10 +145,9 @@ package Systems
 }
 package Utils
 {
-    class ExtentionFunction
+    class MiscHelper
     {
-        +{class}init(): None
-        -__get_root_widget(): Misc
+        +get_root(target: Misc): Misc
     }
 }
 package Widgets
@@ -163,9 +162,6 @@ package Widgets
         -__access_type: RoomAccessType
     }
 }
-
-tk.Frame --|> tk.Misc
-tk.Button --|> tk.Misc
 
 Scene --|> tk.Frame
 Announce --|> Scene
@@ -205,6 +201,5 @@ Discord --+ Member
 
 Login --> RoomAccessManager : use
 RoomAccessManager --> Network : use
-ExtentionFunction --> tk.Misc : extention
 
 @enduml
