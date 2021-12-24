@@ -19,7 +19,7 @@ class Login(Scene):
         entry.bind("<Return>", func=lambda event: SceneManager.load(
             Loading(self.master, lambda: self.__login_process(sv.get()))
         ))
-        entry.place(x=0, y=0, height=1)
+        entry.place(x=0, y=0, height=0)
         back = BackButton(self)
         back.place(
             anchor=tk.SW, 
