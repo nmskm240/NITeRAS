@@ -7,7 +7,7 @@ class Scene(tk.Frame, metaclass=ABCMeta):
     def __init__(self, master):
         master = MiscHelper.get_root(master)
         tk.Frame.__init__(self, master)
-        image_path = f"./resources/images/backgrounds/{self.__class__.__name__.lower()}.png"
+        image_path = f"../resources/images/backgrounds/{self.__class__.__name__.lower()}.png"
         self.__background = tk.PhotoImage(file=image_path)
         photo_label = tk.Label(self, image=self.__background)
         photo_label.pack()
