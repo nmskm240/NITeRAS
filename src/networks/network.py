@@ -1,18 +1,13 @@
-import platform
+import socket
 import requests
-import subprocess
 from networks.access_point import AccessPoint
 from networks.dto_base import DTO
 
 class Network():
     @staticmethod
     def is_connection() -> bool:
-        shell_command = ["ping", "8.8.8.8"]
-        if platform.system() == "Windows":
-            res = subprocess.run(shell_command, stdout=subprocess.PIPE) 
-        else:
-            res = subprocess.run(shell_command + ["-n", "2"])   
-        return res.returncode == 0
+        ip = socket.gethostbyname(socket.gethostname())
+        return not ip == "127.0.0.1"
 
     @staticmethod
     def get(access_point: AccessPoint, req: DTO) -> DTO:
