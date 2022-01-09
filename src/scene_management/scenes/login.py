@@ -20,12 +20,8 @@ class Login(Scene):
             Loading(self.master, lambda: self.__login_process(sv.get()))
         ))
         entry.place(x=0, y=0, height=0)
-        back = BackButton(self)
-        back.place(
-            anchor=tk.SW, 
-            x=0, 
-            y=self.master.winfo_height()
-        )
+        back = BackButton()
+        back.place(self, 0, 600, tk.SW)
 
     def __login_process(self, id: str) -> None:
         id = id.replace("A", "")

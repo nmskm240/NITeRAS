@@ -5,10 +5,10 @@ from widgets.image_button import ImageButton
 from networks.requests.room_access_data import RoomAccessType
 
 class RoomAccessButton(ImageButton):
-    def __init__(self, master, access_type: RoomAccessType) -> None:
+    def __init__(self, access_type: RoomAccessType) -> None:
         image_file_name = "login" if access_type == RoomAccessType.IN else "logout"
-        super().__init__(master, image_file_name)
+        super().__init__(image_file_name)
         self.__access_type = access_type
 
     def _on_click(self) -> None:
-        SceneManager.load(Login(self, self.__access_type))
+        SceneManager.load(Login(self._master, self.__access_type))

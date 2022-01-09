@@ -10,27 +10,13 @@ from widgets.setting_button import SettingButton
 class Home(Scene) :
     def __init__(self, master):
         super().__init__(master)
-        ui = tk.Frame(self)
-        access = tk.Frame(ui)
-        other = tk.Frame(ui)
-        login = RoomAccessButton(
-            access,
-            RoomAccessType.IN
-        )
-        logout = RoomAccessButton(
-            access, 
-            RoomAccessType.OUT
-        )
-        members = MemberButton(other)
-        setting = SettingButton(other)
-        members.config(state=tk.DISABLED)
-        setting.config(state=tk.DISABLED)
-        close = CloseButton(other)
-        ui.place(x=0, y=0)
-        access.pack(fill=tk.X)
-        other.pack(fill=tk.X)
-        login.pack(side=tk.LEFT, padx=50, pady=50)
-        logout.pack(side=tk.LEFT, padx=50, pady=50)
-        setting.pack(side=tk.LEFT, padx=15, pady=15)
-        members.pack(side=tk.LEFT, padx=15, pady=15)
-        close.pack(side=tk.LEFT, padx=15, pady=15)
+        login = RoomAccessButton(RoomAccessType.IN)
+        logout = RoomAccessButton(RoomAccessType.OUT)
+        member = MemberButton()
+        setting = SettingButton()
+        close = CloseButton()
+        login.place(self, 150, 50, tk.NW)        
+        logout.place(self, 874, 50, tk.NE)
+        member.place(self, 30, 550, tk.SW)
+        setting.place(self, 360, 550, tk.SW)
+        close.place(self, 690, 550, tk.SW)
