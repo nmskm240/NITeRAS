@@ -11,6 +11,8 @@ class RoomAccessManager():
     def access(id: int, access_type: RoomAccessType) -> RoomAccessResult:
         dto = StudentID(id)
         member = Network.get(AccessPoint.NAME_LIST, dto)
-        access_data = RoomAccessData(member, Config().campus, access_type)
+        if member is None:
+            raise Exception(f"学生時代{id}は名簿データに登録されていません")
+        access_data = RoomAccessData(member, os.environ["CAMPUS_NAME"], access_type)
         access_result = Network.post(AccessPoint.ROOM_ACCESS_LOG, access_data)
         return access_result
