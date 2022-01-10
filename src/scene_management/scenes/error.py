@@ -1,11 +1,13 @@
-from playsound import playsound
+import tkinter as tk
 from scene_management.scenes.announce import Announce
 
 class Error(Announce):
-    def __init__(self, master, body: str):
-        super().__init__(master, "ERROR", body)
-        self._title.config(fg="red")
-
-    def on_load(self) -> None:
-        playsound("sounds\error.mp3")
-        return super().on_load()
+    def __init__(self, master, message: str):
+        super().__init__(master, message)
+        self.create_text(
+            (50, 250), 
+            anchor=tk.NW, 
+            font=("", 30), 
+            text=self._message,
+            width=700
+        )

@@ -2,32 +2,21 @@ import tkinter as tk
 
 from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
-from scene_management.scene_manager import SceneManager
-from scene_management.scenes.login import Login
-from systems.room_access_manager import RoomAccessManager
+from widgets.close_button import CloseButton
+from widgets.member_button import MemberButton
+from widgets.room_access_button import RoomAccessButton
+from widgets.setting_button import SettingButton
 
 class Home(Scene) :
     def __init__(self, master):
         super().__init__(master)
-        buttons = tk.Label(self)
-        room_in = tk.Button(
-            buttons, 
-            text="入室", 
-            font=("", 80),
-            fg="green",
-            command= lambda: SceneManager.load(
-                Login(self.master, RoomAccessType.IN)
-            )
-        )
-        room_out = tk.Button(
-            buttons, 
-            text="退室",
-            font=("", 80),
-            fg="red",
-            command= lambda: SceneManager.load(
-                Login(self.master, RoomAccessType.OUT)
-            )
-        )
-        room_in.pack(padx=20, side=tk.LEFT)
-        room_out.pack(padx=20, side=tk.LEFT)
-        buttons.pack(pady=50, expand=True)
+        login = RoomAccessButton(RoomAccessType.IN)
+        logout = RoomAccessButton(RoomAccessType.OUT)
+        member = MemberButton()
+        setting = SettingButton()
+        close = CloseButton()
+        login.place(self, 150, 50, tk.NW)        
+        logout.place(self, 874, 50, tk.NE)
+        member.place(self, 30, 550, tk.SW)
+        setting.place(self, 360, 550, tk.SW)
+        close.place(self, 690, 550, tk.SW)

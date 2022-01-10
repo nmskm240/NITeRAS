@@ -1,5 +1,4 @@
 import tkinter as tk
-import platform
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -8,10 +7,9 @@ from scene_management.scenes.home import Home
 from scene_management.scene_manager import SceneManager
 
 app = tk.Tk()
-if platform.system() == "Windows":
-    app.state("zoom")
-else:
-    app.attributes("-zoomed", True)
+app.wm_attributes("-topmost", True)
+app.geometry("1024x600")
+app.attributes("-fullscreen", True)
 app.resizable(False, False)
 app.title("NITeRAS")
 
