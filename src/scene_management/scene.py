@@ -1,5 +1,5 @@
 import tkinter as tk
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from utils.config import Config
 
 from utils.misc_helper import MiscHelper
