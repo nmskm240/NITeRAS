@@ -14,6 +14,7 @@ class RoomAccessData(DTO):
     class Member(DTO):
         class Discord(DTO):
             id: str = ""
+            nickname: str = ""
 
         id: int = -1
         name: str = ""
@@ -24,7 +25,7 @@ class RoomAccessData(DTO):
     type: RoomAccessType = RoomAccessType.IN
 
     def __init__(self, memberData: MemberData, campus: Campus, accessType: RoomAccessType):
-        discord = self.Member.Discord(memberData.discord.id)
+        discord = self.Member.Discord(memberData.discord.id, memberData.discord.nickname)
         member = self.Member(memberData.id, memberData.name, discord)
         self.member = member
         self.campus = campus
