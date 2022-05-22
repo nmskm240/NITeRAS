@@ -1,11 +1,11 @@
 import tkinter as tk
 from networks.access_point import AccessPoint
 
-from scene_management.scene import Scene
-from widgets.close_button import CloseButton
-from widgets.member_button import MemberButton
-from widgets.room_access_button import RoomAccessButton
-from widgets.setting_button import SettingButton
+from views.scene_management.scene import Scene
+from views.widgets.close_button import CloseButton
+from views.widgets.member_button import MemberButton
+from views.widgets.room_access_button import RoomAccessButton
+from views.widgets.setting_button import SettingButton
 
 class Home(Scene) :
     def __init__(self, master):

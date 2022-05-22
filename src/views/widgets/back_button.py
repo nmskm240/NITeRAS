@@ -1,5 +1,5 @@
-from scene_management.scene_manager import SceneManager
-from widgets.image_button import ImageButton
+from views.scene_management.scene_manager import SceneManager
+from views.widgets.image_button import ImageButton
 
 class BackButton(ImageButton):
     def __init__(self) -> None:

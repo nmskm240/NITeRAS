@@ -5,12 +5,12 @@ from networks.access_point import AccessPoint
 from networks.network import Network
 from networks.requests.access_request import AccessRequest
 
-from scene_management.scene import Scene
-from scene_management.scene_manager import SceneManager
-from scene_management.scenes.complete import Complete
-from scene_management.scenes.error import Error
-from scene_management.scenes.loading import Loading
-from widgets.back_button import BackButton
+from views.scene_management.scene import Scene
+from views.scene_management.scene_manager import SceneManager
+from views.scene_management.scenes.complete import Complete
+from views.scene_management.scenes.error import Error
+from views.scene_management.scenes.loading import Loading
+from views.widgets.back_button import BackButton
 
 class Login(Scene): 
     def __init__(self, master, access_point: AccessPoint):

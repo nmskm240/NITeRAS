@@ -1,5 +1,5 @@
 import tkinter as tk
-from scene_management.scenes.announce import Announce
+from views.scene_management.scenes.announce import Announce
 
 class Error(Announce):
     def __init__(self, master, message: str):

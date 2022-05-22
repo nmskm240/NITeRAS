@@ -1,4 +1,4 @@
-from widgets.image_button import ImageButton
+from views.widgets.image_button import ImageButton
 
 class SettingButton(ImageButton):
     def __init__(self) -> None:

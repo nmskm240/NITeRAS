@@ -27,61 +27,21 @@ package Networks
 
     package Requests
     {
-        class AccessRequest 
+        class AccessRequest
         {
             id: str
             place: Place
         }
 
-        class Place 
+        class Place
         {
             campus: str
             name: str
         }
 
-        class StudentID 
+        class StudentID
         {
             +id: int
-        }
-    }
-}
-
-package SceneManagement
-{
-    class SceneManager
-    {
-        -__stack: list[Scene]
-        -__currentScene: Scene
-        +{class}load(scene: Scene): None
-        +{class}back(): None
-        +{class}back_root(): None
-    }
-
-    abstract Scene
-    {
-        -__backgound: PhotoImage
-        +{abstract}on_load(): None
-        +on_show(): None
-        +on_hide(): None
-        +on_destory(): None
-    }
-
-    package Scenes
-    {
-        abstract Announce
-        {
-            #_message: str
-        }
-        class Complete
-        class Error
-        class Home
-        class Login
-        {
-            -__login_process(id: str): None
-        }
-        class Loading
-        {
-            -__task: Thread
         }
     }
 }
@@ -94,17 +54,60 @@ package Utils
     }
 }
 
-package Widgets
+package Views
 {
-    class BackButton
-    class CloseButton
-    abstract ImageButton
+    package SceneManagement
     {
-        #{abstract}_on_click(): None
+        class SceneManager
+        {
+            -__stack: list[Scene]
+            -__currentScene: Scene
+            +{class}load(scene: Scene): None
+            +{class}back(): None
+            +{class}back_root(): None
+        }
+
+        abstract Scene
+        {
+            -__backgound: PhotoImage
+            +{abstract}on_load(): None
+            +on_show(): None
+            +on_hide(): None
+            +on_destory(): None
+        }
+
+        package Scenes
+        {
+            abstract Announce
+            {
+                #_message: str
+            }
+            class Complete
+            class Error
+            class Home
+            class Login
+            {
+                -__login_process(id: str): None
+            }
+            class Loading
+            {
+                -__task: Thread
+            }
+        }
     }
-    class RoomAccessButton
+
+    package Widgets
     {
-        -__access_point: AccessPoint
+        class BackButton
+        class CloseButton
+        abstract ImageButton
+        {
+            #{abstract}_on_click(): None
+        }
+        class RoomAccessButton
+        {
+            -__access_point: AccessPoint
+        }
     }
 }
 

@@ -1,8 +1,7 @@
 from networks.access_point import AccessPoint
-from scene_management.scene_manager import SceneManager
-from scene_management.scenes.login import Login
-from utils.misc_helper import MiscHelper
-from widgets.image_button import ImageButton
+from views.scene_management.scene_manager import SceneManager
+from views.scene_management.scenes.login import Login
+from views.widgets.image_button import ImageButton
 
 class RoomAccessButton(ImageButton):
     def __init__(self, access_point: AccessPoint) -> None:
