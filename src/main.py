@@ -3,8 +3,8 @@ import tkinter as tk
 from dotenv import load_dotenv
 load_dotenv()
 
-from scene_management.scenes.home import Home
-from scene_management.scene_manager import SceneManager
+from views.scene_management.scenes.home import Home
+from views.scene_management.scene_manager import SceneManager
 
 app = tk.Tk()
 app.wm_attributes("-topmost", True)

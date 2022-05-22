@@ -1,4 +1,4 @@
-from scene_management.scene import Scene
+from views.scene_management.scene import Scene
 
 class SceneManager():
     __stack: list[Scene] = list()

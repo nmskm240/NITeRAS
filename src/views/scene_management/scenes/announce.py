@@ -2,8 +2,8 @@ import pygame.mixer
 
 from abc import ABCMeta
 from utils.config import Config
-from scene_management.scene import Scene
-from scene_management.scene_manager import SceneManager
+from views.scene_management.scene import Scene
+from views.scene_management.scene_manager import SceneManager
 
 class Announce(Scene, metaclass=ABCMeta):
     def __init__(self, master, message: str):

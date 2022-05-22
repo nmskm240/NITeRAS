@@ -2,7 +2,7 @@ import tkinter as tk
 
 from marshmallow.fields import Function
 from threading import Thread
-from scene_management.scene import Scene
+from views.scene_management.scene import Scene
 
 class Loading(Scene):
     __task: Thread
