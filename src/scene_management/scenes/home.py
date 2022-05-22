@@ -1,6 +1,6 @@
 import tkinter as tk
+from networks.access_point import AccessPoint
 
-from networks.requests.room_access_data import RoomAccessType
 from scene_management.scene import Scene
 from widgets.close_button import CloseButton
 from widgets.member_button import MemberButton
@@ -10,8 +10,8 @@ from widgets.setting_button import SettingButton
 class Home(Scene) :
     def __init__(self, master):
         super().__init__(master)
-        login = RoomAccessButton(RoomAccessType.IN)
-        logout = RoomAccessButton(RoomAccessType.OUT)
+        login = RoomAccessButton(AccessPoint.ROOM_ENTRY)
+        logout = RoomAccessButton(AccessPoint.ROOM_EXIT)
         member = MemberButton()
         setting = SettingButton()
         close = CloseButton()

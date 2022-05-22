@@ -4,15 +4,13 @@ package Networks
 {
     enum AccessPoint
     {
-        NAME_LIST
-        ROOM_ACCESS_LOG
+        ROOM_ENTRY,
+        ROOM_EXIT
     }
 
     class AccessPointData
     {
-        +url: str
-        +get_res_type: type
-        +post_res_type: type
+        +path: str
     }
 
     abstract DTO<<dataclass, dataclass_json>>
@@ -23,76 +21,27 @@ package Networks
     class Network
     {
         +{static}is_connection(): bool
-        +{static}get(access_point: AccessPoint, req: DTO): DTO
-        +{static}post(access_point: AccessPoint, req: DTO): DTO
+        +{static}get(access_point: AccessPoint, req: DTO): str
+        +{static}post(access_point: AccessPoint, req: DTO): str
     }
 
     package Requests
     {
-        enum Campus
+        class AccessRequest 
         {
-            OBASE,
-            KOKURA
+            id: str
+            place: Place
         }
 
-        enum RoomAccessType
+        class Place 
         {
-            IN,
-            OUT
-        }
-
-        class Discord 
-        {
-            +id: str
-        }
-
-        class Member 
-        {
-            +id: int
-            +name: str
-            +discord: Discord
-        }
-
-        class RoomAccessData 
-        {
-            member: Member
-            campus: Campus
-            type: RoomAccessType
+            campus: str
+            name: str
         }
 
         class StudentID 
         {
             +id: int
-        }
-    }
-
-    package Responses
-    {
-        class DiscordData 
-        {
-            +id: str
-            +tag: str
-            +nickname: str
-        }
-
-        class Game 
-        {
-            +title: str
-            +id: str
-        }
-
-        class MemberData
-        {
-            +id: int
-            +name: str
-            +discord: DiscordData
-            +games: List[Game]
-        }
-
-        class RoomAccessResult
-        {
-            state: str
-            message: str
         }
     }
 }
@@ -136,13 +85,7 @@ package SceneManagement
         }
     }
 }
-package Systems
-{
-    class RoomAccessManager
-    {
-        +{static}access(id: str, access_type: RoomAccessType): 
-    }
-}
+
 package Utils
 {
     class MiscHelper
@@ -150,6 +93,7 @@ package Utils
         +get_root(target: Misc): Misc
     }
 }
+
 package Widgets
 {
     class BackButton
@@ -160,28 +104,21 @@ package Widgets
     }
     class RoomAccessButton
     {
-        -__access_type: RoomAccessType
+        -__access_point: AccessPoint
     }
 }
 
 Scene --|> tk.Frame
 Announce --|> Scene
-Error --|> Scene
 Home --|> Scene
 Login --|> Scene
 Loading --|> Scene
-Complete --|> Scene
 Error --|> Announce
 Complete --|> Announce
 
-RoomAccessData --|> DTO
+AccessRequest --|> DTO
 StudentID --|> DTO
-MemberData --|> DTO
-DiscordData --|> DTO
-Game --|> DTO
-RoomAccessResult --|> DTO
-Member --|> DTO
-Discord --|> DTO
+Place --|> DTO
 
 ImageButton --|> tk.Button
 BackButton --|> ImageButton
@@ -191,17 +128,11 @@ RoomAccessButton --|> ImageButton
 Network .left.> DTO
 Network .up.> AccessPointData
 AccessPoint .left.> AccessPointData
-RoomAccessType .up.> RoomAccessData
-Campus .up.> RoomAccessData
 
 SceneManager "1" *.left.> "*" Scene
 
-Game --+ MemberData
-DiscordData --+ MemberData
-Member --+ RoomAccessData
-Discord --+ Member
+AccessRequest --+ Place
 
-Login --> RoomAccessManager : use
-RoomAccessManager --> Network : use
+Login --> Network : use
 
 @enduml
