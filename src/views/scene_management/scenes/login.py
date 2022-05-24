@@ -12,7 +12,8 @@ from views.scene_management.scenes.error import Error
 from views.scene_management.scenes.loading import Loading
 from views.widgets.back_button import BackButton
 
-class Login(Scene): 
+
+class Login(Scene):
     def __init__(self, master, access_point: AccessPoint):
         super().__init__(master)
         self.__access_point = access_point
@@ -29,14 +30,12 @@ class Login(Scene):
     def __login_process(self, id: str) -> None:
         id = id.replace("A", "")
         if(id.isdigit()):
-            try:
-                req = AccessRequest(id, AccessRequest.Place(os.environ["CAMPUS"], os.environ["ROOM"]))
-                result = json.loads(Network.post(self.__access_point, req))
-                if(result["state"] == "Success"):
-                    SceneManager.load(Complete(self.master, result["message"]))
-                else:
-                    SceneManager.load(Error(self.master, result["message"]))
-            except Exception as e:
-                SceneManager.load(Error(self.master, e))
+            req = AccessRequest(id, AccessRequest.Place(
+                os.environ["CAMPUS"], os.environ["ROOM"]))
+            result = json.loads(Network.post(self.__access_point, req))
+            if("message" in result):
+                SceneManager.load(Error(self.master, result["message"]))
+            else:
+                SceneManager.load(Complete(self.master, ""))
         else:
             SceneManager.load(Error(self.master, "このバーコードは使用できません"))
