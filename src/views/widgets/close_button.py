@@ -1,3 +1,4 @@
+import sys
 from views.widgets.image_button import ImageButton
 
 class CloseButton(ImageButton):
@@ -5,4 +6,4 @@ class CloseButton(ImageButton):
         super().__init__("close")
 
     def _on_click(self) -> None:
-        self._master.quit()
+        sys.exit()
